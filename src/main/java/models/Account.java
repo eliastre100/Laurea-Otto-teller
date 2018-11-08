@@ -7,5 +7,5 @@ import anotations.Model;
 public class Account extends ModelBase {
 
     @Attribute(name = "name")
-    private String name;
+    protected String name;
 }

@@ -54,7 +54,6 @@ public class RepositoryBase {
 
     private <model> void fillResult(ResultSet res, ArrayList<model> data) throws NoSuchMethodException, SQLException, IllegalAccessException, InvocationTargetException, InstantiationException {
         while (res.next()) {
-            System.out.println(this.repository.model().getDeclaredAnnotations().length);
             model entity = (model) this.repository.model().newInstance();
             Method method = entity.getClass().getMethod("importDatabaseData", ResultSet.class);
             method.invoke(entity, res);

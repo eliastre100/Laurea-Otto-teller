@@ -1,13 +1,16 @@
-import models.Account;
-import repositories.AccountRepository;
+import models.Car;
+import repositories.CarRepository;
 
 import java.util.List;
 
 public class Main {
 
     public static void main(String[] attr) {
-        AccountRepository repository = new AccountRepository();
-        List<Account> cars = repository.findAll();
+        CarRepository repository = new CarRepository();
+        List<Car> cars = repository.findAll();
+        for (Car car : cars) {
+            System.out.println(car);
+        }
     }
 
 }
