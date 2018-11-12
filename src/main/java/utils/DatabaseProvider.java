@@ -9,7 +9,7 @@ public class DatabaseProvider {
     private static final String username = "root";
     private static final String password = "";
 
-    static Connection conn = null;
+    static private Connection conn = null;
 
     public static Connection getDatabase() {
         if (conn == null) {

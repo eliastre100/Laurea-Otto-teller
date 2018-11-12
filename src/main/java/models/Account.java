@@ -3,9 +3,25 @@ package models;
 import anotations.Attribute;
 import anotations.Model;
 
-@Model(table = "cars")
+@Model(table = "accounts")
 public class Account extends ModelBase {
 
-    @Attribute(name = "name")
-    protected String name;
+    @Attribute(name = "identifier")
+    public String identifier;
+
+    @Attribute(name = "password")
+    protected String password;
+
+    @Attribute(name = "balance")
+    public float balance;
+
+    public Account() {
+
+    }
+
+    public Account(String identifier, String password, float balance) {
+        this.identifier = identifier;
+        this.password = password;
+        this.balance = balance;
+    }
 }
