@@ -10,8 +10,7 @@ public class Main {
         Account account = (Account) repository.findAll().get(0);
 
         System.out.println(account);
-        account.balance += 10;
-        account.save();
+        account.destroy();
         System.out.println(account);
     }
 

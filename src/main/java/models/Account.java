@@ -1,7 +1,7 @@
 package models;
 
-import anotations.Attribute;
-import anotations.Model;
+import annotations.Attribute;
+import annotations.Model;
 
 @Model(table = "accounts")
 public class Account extends ModelBase {

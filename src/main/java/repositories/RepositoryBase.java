@@ -1,11 +1,9 @@
 package repositories;
 
-import anotations.Model;
-import anotations.Repository;
-import models.ModelBase;
+import annotations.Model;
+import annotations.Repository;
 import utils.DatabaseProvider;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.*;

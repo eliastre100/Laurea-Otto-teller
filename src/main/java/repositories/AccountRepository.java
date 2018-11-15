@@ -1,6 +1,6 @@
 package repositories;
 
-import anotations.Repository;
+import annotations.Repository;
 import models.Account;
 
 @Repository(model = Account.class)

@@ -1,13 +1,12 @@
 package models;
 
-import anotations.Attribute;
-import anotations.Model;
+import annotations.Attribute;
+import annotations.Model;
 import utils.DatabaseProvider;
 import utils.Pair;
 import utils.StringUtils;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.*;
 import java.util.HashMap;
@@ -16,7 +15,7 @@ import java.util.Map;
 public class ModelBase {
 
     @Attribute(name="id")
-    protected int id = -1;
+    private int id = -1;
 
     private HashMap<String, Pair<Field, Class>> attributes = new HashMap<>();
     private String table = "";
@@ -52,11 +51,18 @@ public class ModelBase {
         }
     }
 
+    public boolean destroy() {
+        if (this.id != -1) {
+            return this.delete();
+        }
+        return false;
+    }
+
     public int getId() {
         return this.id;
     }
 
-    public void setId(Integer id) {
+    private void setId(Integer id) {
         if (id != null) {
             this.id = id;
         }
@@ -134,6 +140,7 @@ public class ModelBase {
                 throw new SQLException("Failed to persist new instance of " + this.getClass().getSimpleName());
             }
             this.updateId(statement);
+            return true;
         } catch (SQLException e) {
             System.err.println("[ERROR] An error occurred while persisting data: " + e.getMessage());
         }
@@ -221,5 +228,26 @@ public class ModelBase {
             System.err.println("[ERROR] An unexpected error occurred: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private boolean delete() {
+        System.out.println("[INFO] Removing database entry for model " + this.getClass().getSimpleName() + " with id " + this.id);
+        String query = "DELETE FROM " + this.table + " WHERE " + this.table + ".id = ?;";
+
+        try {
+            Connection conn = DatabaseProvider.getDatabase();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.closeOnCompletion();
+            stmt.setInt(1, this.id);
+            if (stmt.executeUpdate() == 0) {
+                throw new SQLException("Unable to delete database entry for " + this.getClass().getSimpleName() + " (" + this.id + ")");
+            }
+            this.id = -1;
+            return true;
+        } catch (SQLException e) {
+            System.err.println("[ERROR] An SQL error occurred: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return true;
     }
 }
