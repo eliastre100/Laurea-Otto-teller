@@ -2,6 +2,7 @@ package repositories;
 
 import annotations.Model;
 import annotations.Repository;
+import models.ModelBase;
 import utils.DatabaseProvider;
 
 import java.lang.reflect.InvocationTargetException;
@@ -35,8 +36,30 @@ public class RepositoryBase {
             System.err.println("[ERROR] Unexpected error");
             e.printStackTrace();
         }
-
         return result;
+    }
+
+    public <model> model find(int id) {
+        ModelBase model = null;
+        String query = "SELECT * FROM " + table + " WHERE " + table + ".id = ?;";
+
+        try {
+            Connection conn = DatabaseProvider.getDatabase();
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.closeOnCompletion();
+            statement.setInt(1, id);
+            ResultSet res = statement.executeQuery();
+            if (!res.next()) { return null; }
+            model =  (ModelBase) this.repository.model().newInstance();
+            model.importDatabaseData(res);
+        } catch (SQLException e) {
+            System.err.println("[ERROR][SQL] Sql exception");
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("[ERROR] Unexpected error");
+            e.printStackTrace();
+        }
+        return (model) model;
     }
 
     private void initTable() {
