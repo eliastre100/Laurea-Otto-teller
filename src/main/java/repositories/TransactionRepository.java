@@ -5,7 +5,7 @@ import models.Transaction;
 
 /**
  * Transaction repository. Used to retrieve transactions from database and create java instances
- * @see models.Account
+ * @see models.Transaction
  * @author Antoine FORET
  * @version 1.0
  */
