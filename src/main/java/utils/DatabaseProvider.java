@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class DatabaseProvider {
-    private static final String host = "localhost:32771";
+    private static final String host = "localhost:32769";
     private static final String database = "otto-teller";
     private static final String username = "root";
     private static final String password = "root";

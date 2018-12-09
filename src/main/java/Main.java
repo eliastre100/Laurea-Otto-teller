@@ -8,14 +8,13 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] attr) {
-        /*AccountRepository accountRepository = new AccountRepository();
+        AccountRepository accountRepository = new AccountRepository();
         List<Account> accounts = accountRepository.findAll();
-        Account account1 = accounts.get(0);
-        Account account2 = accounts.get(1);*/
+        System.out.println(accounts);
 
-        TransactionRepository repositoy = new TransactionRepository();
+        /*TransactionRepository repositoy = new TransactionRepository();
 
         Transaction transaction = repositoy.find(1);
-        transaction.destroy();
+        transaction.destroy();*/
     }
 }

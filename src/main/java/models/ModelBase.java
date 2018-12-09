@@ -3,7 +3,6 @@ package models;
 import annotations.Attribute;
 import annotations.Model;
 import annotations.OneToOne;
-import annotations.Repository;
 import repositories.RepositoryBase;
 import utils.DatabaseProvider;
 import utils.Pair;
