@@ -97,4 +97,13 @@ public class Account extends ModelBase {
         if (amount <= 0) return;
         this.balance -= amount;
     }
+
+    /**
+     * Check whenever the password is valid or not
+     * @param password the password to test
+     * @return if the password is valid
+     */
+    public boolean validatePassword(String password) {
+        return this.password.equals(password);
+    }
 }

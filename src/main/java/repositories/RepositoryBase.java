@@ -4,6 +4,7 @@ import annotations.Model;
 import annotations.Repository;
 import models.ModelBase;
 import utils.DatabaseProvider;
+import utils.StringUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -62,6 +63,26 @@ public class RepositoryBase {
         return (model) model;
     }
 
+    public <model, valueType> List<model> findBy(String field, valueType value) {
+        String query = "SELECT * FROM " + table + " WHERE " + field + " = ?";
+        ArrayList<model> result = new ArrayList<>();
+
+        try {
+            Connection conn = DatabaseProvider.getDatabase();
+            PreparedStatement statement = conn.prepareStatement(query);
+            this.setFieldValue(statement, 1, value);
+            ResultSet res = statement.executeQuery();
+            this.fillResult(res, result);
+        } catch (SQLException e) {
+            System.err.println("[ERROR][SQL] Sql exception");
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("[ERROR] Unexpected error");
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     private void initTable() {
         try {
             this.repository = this.getClass().getAnnotation(Repository.class);
@@ -79,6 +100,20 @@ public class RepositoryBase {
             Method method = entity.getClass().getMethod("importDatabaseData", ResultSet.class);
             method.invoke(entity, res);
             data.add(entity);
+        }
+    }
+
+    private <valueType> void setFieldValue(PreparedStatement stmt, int idx, valueType value) throws SQLException {
+        if (value instanceof ModelBase) {
+            stmt.setInt(idx, ((ModelBase) value).getId());
+        } else {
+            try {
+                Method set = stmt.getClass().getMethod("set" + StringUtils.capitalize(value.getClass().getSimpleName()), int.class, value.getClass());
+                set.invoke(stmt, idx, value);
+            } catch (Exception e) {
+                System.err.println("[ERROR] An unexpected error occurred while filling repository request");
+                e.printStackTrace();
+            }
         }
     }
 }
