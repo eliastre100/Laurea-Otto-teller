@@ -2,7 +2,6 @@ package controllers;
 
 import models.Account;
 import repositories.AccountRepository;
-import views.HomeView;
 import views.LoginView;
 
 import java.util.List;
@@ -44,8 +43,9 @@ public class LoginController {
         if (accounts.size() < 1 || !accounts.get(0).validatePassword(password)) {
             this.view.showInvalidCredentials();
         } else {
+            System.out.println("[INFO] User " + accounts.get(0).getIdentifier() + " just logged in");
             this.view.resetFields();
-            new HomeView();
+            new HomeController(accounts.get(0));
         }
     }
 }
