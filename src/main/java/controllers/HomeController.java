@@ -24,7 +24,7 @@ public class HomeController {
     }
 
     private void summary() {
-        System.out.println("Summary");
+        this.view.showSummary(this.account);
     }
 
     private void transactions() {

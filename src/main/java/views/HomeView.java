@@ -84,4 +84,8 @@ public class HomeView extends JFrame {
         button.addActionListener(callback);
         getContentPane().add(button);
     }
+
+    public void showSummary(Account account) {
+        JOptionPane.showMessageDialog(this, "Your account " + account.getIdentifier() + " have a balance of " + account.getBalance(), "Account summary", JOptionPane.INFORMATION_MESSAGE);
+    }
 }
