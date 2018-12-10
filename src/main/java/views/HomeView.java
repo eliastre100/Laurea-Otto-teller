@@ -4,7 +4,6 @@ import models.Account;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
-import java.util.EventListener;
 import java.util.HashMap;
 
 public class HomeView extends JFrame {
@@ -87,5 +86,13 @@ public class HomeView extends JFrame {
 
     public void showSummary(Account account) {
         JOptionPane.showMessageDialog(this, "Your account " + account.getIdentifier() + " have a balance of " + account.getBalance(), "Account summary", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public String askWithdraw(Account account) {
+        return JOptionPane.showInputDialog(this, "How many would you withdraw from account " + account.getIdentifier() + " (maximum " + account.getBalance() + ") ?", "Account withdraw", JOptionPane.PLAIN_MESSAGE);
+    }
+
+    public void showError(String str) {
+        JOptionPane.showMessageDialog(this, str, "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
