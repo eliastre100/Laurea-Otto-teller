@@ -1,6 +1,7 @@
 package views;
 
 import models.Account;
+import utils.Pair;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -94,5 +95,26 @@ public class HomeView extends JFrame {
 
     public void showError(String str) {
         JOptionPane.showMessageDialog(this, str, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public Pair<String, Float> askTransfer() {
+        JLabel recipientLabel = new JLabel("Recipient");
+        JLabel amountLabel = new JLabel("Amount");
+        JTextField recipient = new JTextField();
+        JTextField amount = new JTextField();
+        JComponent[] components = new JComponent[] {
+                recipientLabel,
+                recipient,
+                amountLabel,
+                amount
+        };
+        int result = JOptionPane.showConfirmDialog(this, components, "Transfer order", JOptionPane.DEFAULT_OPTION);
+        if (result == -1 || amount.getText().equals(""))
+            return new Pair<>("", Float.NaN);
+        try {
+            return new Pair<>(recipient.getText(), Float.parseFloat(amount.getText()));
+        } catch (Exception e) {
+            return new Pair<>("", Float.NaN);
+        }
     }
 }

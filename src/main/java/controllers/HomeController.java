@@ -3,6 +3,7 @@ package controllers;
 import models.Account;
 import models.Transaction;
 import repositories.AccountRepository;
+import utils.Pair;
 import views.HomeView;
 
 import java.awt.event.ActionListener;
@@ -56,7 +57,27 @@ public class HomeController {
     }
 
     private void transfer() {
-        System.out.println("transfer");
+        try {
+            this.updateAccount();
+            Pair<String, Float> result = this.view.askTransfer();
+            Account recipient = (Account) this.accountRepository.findBy("identifier", result.left).get(0);
+            float amount = result.right;
+            if (recipient != null && amount > 0 && amount <= this.account.getBalance()) {
+                Transaction transaction = new Transaction(this.account, recipient, amount);
+                this.account.debit(amount);
+                recipient.credit(amount);
+                recipient.save();
+                account.save();
+                transaction.save();
+            } else {
+                this.view.showError("Bad input");
+            }
+        } catch (IndexOutOfBoundsException e) {
+            this.view.showError("Recipient not found");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("[ERROR] Unexpected error occurred");
+        }
     }
 
     private void delete() {
