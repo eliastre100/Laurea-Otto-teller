@@ -60,7 +60,10 @@ public class HomeController {
     }
 
     private void delete() {
-        System.out.println("delete");
+        System.out.println("[INFO] User " + this.account.getIdentifier() + " just deleted it's account!");
+        this.account.destroy();
+        this.view.setVisible(false);
+        this.view.dispose();
     }
 
     private void logout() {
