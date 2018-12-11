@@ -1,9 +1,12 @@
 plugins {
+    id 'com.github.johnrengelman.shadow' version '4.0.3'
     id 'java'
 }
 
 group 'fi.laurea'
 version '1.0-SNAPSHOT'
+
+apply plugin: "eclipse"
 
 sourceCompatibility = 1.8
 

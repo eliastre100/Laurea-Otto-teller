@@ -16,7 +16,7 @@ In order to use this software you need to have the Java virtual machine installe
 The project use Gradle as building tool. You can find a embeded version within this repository if you just need to compile it.
 
 ```
-gradle jar
+gradle shadowJar
 ```
 
 Then import the sql schema inside your database (database.sql)
@@ -24,7 +24,7 @@ Then import the sql schema inside your database (database.sql)
 then simply run the jar crated either using your graphical interface or the command line
 
 ```
-java -jar build/libs/fi.laurea-1.0-SNAPSHOT.jar 
+java -jar build/libs/fi.laurea-1.0-SNAPSHOT-all.jar 
 ```
 
 **note that you might need to update the database connection information inside the utils/DatabaseProvide.java class**
