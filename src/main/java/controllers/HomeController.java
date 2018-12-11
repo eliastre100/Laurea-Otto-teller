@@ -12,6 +12,7 @@ import java.util.*;
 
 /**
  * Main controller of the application. This class handle all the logic from actions of an authenticated user.
+ * @see views.HomeView
  * @author Antoine FORET
  * @version 1.0
  */

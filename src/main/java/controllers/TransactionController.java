@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Transaction controller. Used to display the transaction summary to the user. It doesn't contain any logic but to keep our code clean, we split the logic and display parts anyway.
+ * @see views.TransactionsView
  * @author Antoine FORET
  * @version 1.0
  */

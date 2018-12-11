@@ -7,17 +7,28 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Transaction view. Allow the user to see the summary of it's transactions
+ * @see controllers.TransactionController
+ * @author Antoine FORET
+ * @version 1.0
+ */
 public class TransactionsView extends JFrame {
 
+    /*
+     * Dimensions of the windows
+     */
     static final int width = 500;
     static final int height = 500;
 
-    List<Transaction> transactions;
 
+    /**
+     * Constructor of the view. add all the elements to the window
+     * @param account the account the summary is for
+     * @param transactions the list of all the user's transactions
+     */
     public TransactionsView(Account account, List<Transaction> transactions) {
         super("Otto-Teller Home - " + account.getIdentifier());
-
-        this.transactions = transactions;
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -29,6 +40,11 @@ public class TransactionsView extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Add the tab element to the window
+     * @param account the account the summary is for
+     * @param transactions the list of all the transactions
+     */
     private void addTabs(Account account, List<Transaction> transactions) {
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setBounds(0, 0, width, height);
@@ -38,28 +54,53 @@ public class TransactionsView extends JFrame {
     }
 }
 
+/**
+ * The withdraw summary tab
+ * @author Antoine FORET
+ * @version 1.0
+ */
 class WithdrawTab extends JPanel {
 
+    /**
+     * Add all the transactions element on the tab
+     * @param transactions the list of all the transactions from the user
+     */
     public WithdrawTab(List<Transaction> transactions) {
-        this.addList(transactions);
-        setVisible(true);
-    }
-
-    private void addList(List<Transaction> transactions) {
         JList list = new JList(WithdrawFormater.format(transactions));
         add(list);
+        setVisible(true);
     }
 }
 
+/**
+ * The transfer summary tab
+ * @author Antoine FORET
+ * @version 1.0
+ */
 class TransferTab extends JPanel {
 
+    /**
+     * Add all the transactions element on the tab
+     * @param transactions the list of all the transactions from the user
+     */
     public TransferTab(Account account, List<Transaction> transactions) {
         JList list = new JList(TransferFormater.format(account, transactions));
         add(list);
     }
 }
 
+/**
+ * Formatter to create string list from the transaction list
+ * @author Antoine FORET
+ * @version 1.0
+ */
 class WithdrawFormater {
+
+    /**
+     * Filter and convert all the transaction into a list of string containing the amount of each withdraws
+     * @param transactions the list of all the user's transactions
+     * @return a formatted list of withdraws as strings
+     */
     static String[] format(List<Transaction> transactions) {
         List<String> res = new ArrayList<>();
         transactions.forEach(elem -> {
@@ -71,7 +112,19 @@ class WithdrawFormater {
     }
 }
 
+
+/**
+ * Formatter to create string list from the transaction list
+ * @author Antoine FORET
+ * @version 1.0
+ */
 class TransferFormater {
+
+    /**
+     * Filter and convert all the transaction into a list of string containing the amount of each transfers
+     * @param transactions the list of all the user's transactions
+     * @return a formatted list of transfers as strings
+     */
     static String[] format(Account account, List<Transaction> transactions) {
         List<String> res = new ArrayList<>();
         transactions.forEach(elem -> {
