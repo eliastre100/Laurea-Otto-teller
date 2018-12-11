@@ -3,16 +3,18 @@ package controllers;
 import models.Account;
 import models.Transaction;
 import repositories.AccountRepository;
+import repositories.TransactionRepository;
 import utils.Pair;
 import views.HomeView;
 
 import java.awt.event.ActionListener;
-import java.util.HashMap;
+import java.util.*;
 
 public class HomeController {
     HomeView view;
     Account account;
     AccountRepository accountRepository;
+    TransactionRepository transactionRepository;
 
     HomeController(Account account) {
         HashMap<String, ActionListener> handlers = new HashMap<>();
@@ -25,6 +27,7 @@ public class HomeController {
 
         this.account = account;
         this.accountRepository = new AccountRepository();
+        this.transactionRepository = new TransactionRepository();
         this.view = new HomeView(account, handlers);
     }
 
@@ -34,7 +37,18 @@ public class HomeController {
     }
 
     private void transactions() {
-        System.out.println("transactions");
+        this.updateAccount();
+        List<Transaction> transactions = this.transactionRepository.findBy("initiator_id", this.account);
+        List<Transaction> recipientTransactions = this.transactionRepository.findBy("recipient_id", this.account);
+        List<Transaction> duplicated = new ArrayList<>();
+        recipientTransactions.forEach(elem -> {
+            if (elem.getInitiator().getId() == elem.getRecipient().getId())
+                duplicated.add(elem);
+        });
+        recipientTransactions.removeAll(duplicated);
+        transactions.addAll(recipientTransactions);
+        Collections.sort(transactions, (elem1, elem2) -> elem2.getId() - elem1.getId());
+        new TransactionController(this.account, transactions);
     }
 
     private void withdraw() {

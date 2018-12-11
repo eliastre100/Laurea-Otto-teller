@@ -15,7 +15,7 @@ import java.security.InvalidParameterException;
 @Model(table = "transactions")
 public class Transaction extends ModelBase {
 
-    enum TransactionType {
+    public enum TransactionType {
         Transfer,
         Withdraw
     }
