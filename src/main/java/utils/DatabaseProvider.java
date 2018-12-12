@@ -10,7 +10,7 @@ import java.sql.DriverManager;
  */
 public class DatabaseProvider {
     /* Parameters for the database connection. The database must be a MySQL database */
-    private static final String host = "localhost:32771";
+    private static final String host = "localhost:32769";
     private static final String database = "otto-teller";
     private static final String username = "root";
     private static final String password = "root";
